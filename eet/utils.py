@@ -6,7 +6,7 @@ Created on 15. 10. 2016
 
 import datetime
 import pytz
-import eet_exceptions
+import eet.eet_exceptions
 
 def format_num(number):
     '''Format a number to an EET compatible format.

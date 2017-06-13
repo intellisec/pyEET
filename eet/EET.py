@@ -4,14 +4,14 @@ Created on 10. 10. 2016
 @author: neneko
 '''
 
-from Trzba import *
+from eet.Trzba import *
 from lxml import etree
-from signing import Signing
-import wsse
+from eet.signing import Signing
+import eet.wsse as wsse
 import requests
-from eet_ns import NS_EET_URL
-import utils
-import eet_exceptions
+from eet.eet_ns import NS_EET_URL
+import eet.utils as utils
+import eet.eet_exceptions as eet_exceptions
 
 class EET:
 

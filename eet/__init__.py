@@ -1,5 +1,5 @@
-from EET import EET
-from Trzba import *
+from eet.EET import EET
+from eet.Trzba import *
 
 
 if __name__ == '__main__':

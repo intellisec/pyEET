@@ -9,7 +9,7 @@ import hashlib
 import base64
 from lxml import etree
 import uuid
-import utils
+import eet.utils as utils
 
 TAX_NONE=0
 TAX_BASIC=1

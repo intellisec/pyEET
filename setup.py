@@ -14,6 +14,12 @@ setup(
     keywords = "EET",
     url = "https://github.com/v154c1/pyEET",
     packages=['eet'],
+    install_requires=[
+          'lxml<3.9.0',
+          'pyopenssl<17.1.0',
+          'pytz<2018',
+          'requests<2.18.0',
+      ],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 3 - Alpha",

@@ -13,10 +13,10 @@ except ImportError:
     
 import hashlib
 import uuid
-from eet_ns import *
+from eet.eet_ns import *
 from string import Template
 import base64
-from utils import find_node
+from eet.utils import find_node
 
 envelope_template = Template('''<${soap}:Envelope xmlns:${soap}="${soap_url}">
 <${soap_env}:Header xmlns:${soap_env}="${soap_env_url}">

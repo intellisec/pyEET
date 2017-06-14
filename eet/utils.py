@@ -6,7 +6,7 @@ Created on 15. 10. 2016
 
 import datetime
 import pytz
-import eet.eet_exceptions
+import eet.eet_exceptions as eet_exceptions
 
 def format_num(number):
     '''Format a number to an EET compatible format.
@@ -52,7 +52,7 @@ def prepare_pkp(dic, provozovna, pokladna, uctenka, datum, trzba):
         datum,
         format_num(trzba))
 
-def find_node(root, tag, ns = None):
+def find_nodes(root, tag, ns = None):
     '''Returns first node with specified name and namespace, or throws
     
     Keyword arguments:
@@ -67,4 +67,8 @@ def find_node(root, tag, ns = None):
         nodes = [x for x in root.iter() if x.tag[-len(tag):] == tag]
     if len(nodes) < 1:
         raise eet_exceptions.NodeNotFound('Node %s not found'%tag)
+    return nodes
+
+def find_node(root, tag, ns = None):
+    nodes = find_nodes(root, tag, ns)
     return nodes[0]

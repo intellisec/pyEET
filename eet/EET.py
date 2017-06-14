@@ -27,7 +27,9 @@ class EET:
         cn = [x for x in components if x[0] == b'CN']
         assert(len(cn) == 1)
         self._dic = cn[0][1].decode('utf8')
-        print('DIC: %s' % self._dic)
+        # Test varovani
+        #self._dic = "CZ25784872"
+        # print('DIC: %s' % self._dic)
 
     def create_payment(self, poradi, amount, first=True, test=True):
         header = TrzbaHeader(first, test)
@@ -45,7 +47,7 @@ class EET:
         resp.raise_for_status()
         try:
             reply = etree.XML(resp.content)
- #           print(etree.tostring(reply, pretty_print=4))
+            # print(etree.tostring(reply, pretty_print=4))
             header = utils.find_node(reply, 'Hlavicka', NS_EET_URL)
         except etree.XMLSyntaxError as e:
             raise eet_exceptions.BadResponse('Failed to parse response from server (%s)'%(str(e)))
@@ -53,7 +55,7 @@ class EET:
             raise eet_exceptions.BadResponse('Failed to process response - missing node Hlavicka')
         
         try:
-            confirmation = utils.find_node(reply, 'Potvrzeni', NS_EET_URL)
+            confirmation = utils.find_node(reply, 'Potvrzeni', NS_EET_URL)            
             orig_bkp = utils.find_node(trzba_xml, 'bkp')
             bkp = header.get('bkp')
 #            print('received bkp: %s, original: %s' % (bkp, orig_bkp.text))
@@ -66,6 +68,13 @@ class EET:
                 'bkp': bkp,
                 'fik': confirmation.get('fik'), 
                 'test': confirmation.get('test')}
+                
+            try:
+                warnings = utils.find_nodes(reply, 'Varovani', NS_EET_URL)
+                response.update({ 'warnings': [ { 'kod': w.get('kod_varov'), 'text':w.text } for w in warnings ] })
+            except eet_exceptions.NodeNotFound:
+                pass
+                
         except eet_exceptions.NodeNotFound:
             try: 
                 error = utils.find_node(reply, 'Chyba', NS_EET_URL)
